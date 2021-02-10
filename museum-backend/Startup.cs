@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using museum_backend.Services;
+using museum_backend.Setting;
 
 namespace museum_backend
 {
@@ -26,6 +29,21 @@ namespace museum_backend
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
+			services.Configure<DBSettings>(
+				Configuration.GetSection(nameof(DBSettings)));
+
+			services.AddSingleton<IDBSettings>(sp =>
+				sp.GetRequiredService<IOptions<DBSettings>>().Value);
+
+			services.AddSingleton<AnimalService>();
+			services.AddSingleton<AnimalTypeService>();
+			services.AddSingleton<DonerService>();
+			services.AddSingleton<MuseumInfoService>();
+			services.AddSingleton<NewsService>();
+			services.AddSingleton<OrganService>();
+			services.AddSingleton<OwnerService>();
+			services.AddSingleton<TaxonomyService>();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +64,8 @@ namespace museum_backend
 			{
 				endpoints.MapControllers();
 			});
+
+			
 		}
 	}
 }
