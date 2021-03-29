@@ -21,6 +21,6 @@ namespace museum_backend.Models
         [BsonRepresentation(BsonType.String)]
         public DateTimeOffset EditDate { get; set; }
 
-
+        public bool checkbox { get; set; }
     }
 }

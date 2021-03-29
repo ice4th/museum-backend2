@@ -26,13 +26,18 @@ namespace museum_backend.Controllers
       
 
         [HttpGet("visitor")]
-        public ActionResult<List<Animal>> GetForVisitor([FromQuery] string typeId)
+        /* public ActionResult<List<Animal>> GetForVisitor([FromQuery] string typeId)
+         {
+             return _animalService.GetByTypeId(typeId);
+         }*/
+        
+        public ActionResult<List<Animal>> GetForVisitor()
         {
-            return _animalService.GetByTypeId(typeId);
+            return _animalService.Get();
         }
 
-        [HttpGet("{id:length(24)}")]
 
+        [HttpGet("{id:length(24)}")]
 
         public ActionResult<AnimalDetail> Get(string id)
         {
@@ -51,13 +56,21 @@ namespace museum_backend.Controllers
                 TaxonomyId = Taxonomy,
                 BoneImgPath = animal.BoneImgPath,
                 ImgPath = animal.ImgPath,
-                OrganId = animal.OrganId
+                OrganId = animal.OrganId,
+                TypeId = animal.TypeId
 
             };
             return animalDetail; 
-
-
         }
+        [HttpPut("upload-bone")]
+        public ActionResult ReceiveFile([FromForm] IFormFile file)
+        {
+            return Ok("success");
+        }
+
+
+
+
 
 
 

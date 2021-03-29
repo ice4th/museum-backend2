@@ -23,5 +23,7 @@ namespace museum_backend.Services
 
         public News Get(string id) =>
             _news.Find(news => news.Id == id).FirstOrDefault();
+
+        public void Create(News newNews) => _news.InsertOne(newNews);
     }
 }

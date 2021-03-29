@@ -21,7 +21,7 @@ namespace museum_backend.Controllers
         }
 
         [HttpGet("visitor")]
-        public ActionResult<List<Taxonomy>> GetFotVisitor()
+        public ActionResult<List<Taxonomy>> GetForVisitor()
         {
             return _taxonomyService.Get();
         }

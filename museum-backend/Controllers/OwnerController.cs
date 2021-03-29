@@ -21,7 +21,7 @@ namespace museum_backend.Controllers
         }
 
         [HttpGet("visitor")]
-        public ActionResult<List<Owner>> GetFotVisitor()
+        public ActionResult<List<Owner>> GetForVisitor()
         {
             return _ownerService.Get();
         }

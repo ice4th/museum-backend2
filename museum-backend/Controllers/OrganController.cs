@@ -21,7 +21,7 @@ namespace museum_backend.Controllers
         }
 
         [HttpGet("visitor")]
-        public ActionResult<List<Organ>> GetFotVisitor()
+        public ActionResult<List<Organ>> GetForVisitor()
         {
             return _organService.Get();
         }
@@ -30,8 +30,12 @@ namespace museum_backend.Controllers
         public ActionResult<Organ> Get(string id)
         {
             return _organService.Get(id);
+        }
 
-
+        [HttpPut("upload-organ")]
+        public ActionResult ReceiveFile([FromForm] IFormFile file)
+        {
+            return Ok("success");
         }
     }
 }
