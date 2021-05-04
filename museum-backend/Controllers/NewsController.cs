@@ -28,26 +28,53 @@ namespace museum_backend.Controllers
 
         [HttpGet("{id:length(24)}")]
         public ActionResult<News> Get(string id)
+
         {
             return _newsService.Get(id);
         }
 
         //insert
         [HttpPost()]
-        public ActionResult<News> ReceiveFile([FromForm] NewsInput file)
+        public ActionResult<News> ReceiveFile([FromForm] NewsInput data)
         {
             var newNews = new News()
             {
-                Description = file.Description,
-                ImgPath = file.ImgPath,
-                checkbox = file.checkbox,
+                Title = data.Title,
+                Description = data.Description,
+                ImgPath = data.ImgPath,
+            };
+            _newsService.Create(newNews);
+        
+            return Ok(200);
+        }
 
+        //update
+        [HttpPut()]
+        public IActionResult Update([FromForm] News newsIn)
+        {
+            var newNews = new News()
+            {
+                Title = newsIn.Title,
+                Description = newsIn.Description,
+                ImgPath = newsIn.ImgPath,
             };
 
-            _newsService.Create(newNews);
+            _newsService.Update(newsIn.Id, newsIn);
 
-            return CreatedAtRoute("GetNews", new { id = newNews.Id.ToString() }, newNews);
+            return NoContent();
+        }
 
+        //delete
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
+        {
+            News news;
+            {
+                news = _newsService.Get(id);
+            }
+            _newsService.Remove(news);
+
+            return NoContent();
 
         }
 

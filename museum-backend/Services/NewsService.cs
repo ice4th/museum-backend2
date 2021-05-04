@@ -25,5 +25,10 @@ namespace museum_backend.Services
             _news.Find(news => news.Id == id).FirstOrDefault();
 
         public void Create(News newNews) => _news.InsertOne(newNews);
+
+        public void Update(string id, News newsIn) =>
+            _news.ReplaceOne(news => news.Id == id,newsIn);
+        public void Remove(News newsIn) =>
+            _news.DeleteOne(news => news.Id == newsIn.Id);
     }
 }

@@ -10,6 +10,5 @@ namespace museum_backend.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public ICollection<string> ImgPath { get; set; }
-        public bool checkbox { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,21 +13,15 @@ namespace museum_backend.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        public string NameTh { get; set; }
-        public string NameEng { get; set; }
-        public string SciName { get; set; }
-        public string TechnicalTerm { get; set; }
+        public string ThaiName { get; set; }
+        public string CommoneName { get; set; }
+        public string ScientificName { get; set; }
         public string Description { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string TaxonomyId { get; set; }
         public ICollection<string> BoneImgPath { get; set; }
         public ICollection<string> ImgPath { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ICollection<string> OrganId { get; set; }
-
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string TypeId { get; set; }
 
     }
 }

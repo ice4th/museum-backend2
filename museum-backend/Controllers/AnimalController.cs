@@ -17,24 +17,19 @@ namespace museum_backend.Controllers
         private readonly AnimalService _animalService;
         private readonly TaxonomyService _taxonomyService;
 
-        public AnimalController(AnimalService animalService, TaxonomyService taxonomyService )
+        public AnimalController(AnimalService animalService, TaxonomyService taxonomyService)
         {
             _animalService = animalService;
-            _taxonomyService = taxonomyService; 
+            _taxonomyService = taxonomyService;
         }
 
-      
 
         [HttpGet("visitor")]
-        /* public ActionResult<List<Animal>> GetForVisitor([FromQuery] string typeId)
-         {
-             return _animalService.GetByTypeId(typeId);
-         }*/
-        
         public ActionResult<List<Animal>> GetForVisitor()
         {
             return _animalService.Get();
         }
+
 
 
         [HttpGet("{id:length(24)}")]
@@ -48,19 +43,17 @@ namespace museum_backend.Controllers
             var animalDetail = new AnimalDetail
             {
                 Id = animal.Id,
-                NameTh = animal.NameTh,
-                NameEng = animal.NameEng,
-                SciName = animal.SciName,
-                TechnicalTerm = animal.TechnicalTerm,
+                ThaiName = animal.ThaiName,
+                CommoneName = animal.CommoneName,
+                ScientificName = animal.ScientificName,
                 Description = animal.Description,
                 TaxonomyId = Taxonomy,
                 BoneImgPath = animal.BoneImgPath,
                 ImgPath = animal.ImgPath,
-                OrganId = animal.OrganId,
-                TypeId = animal.TypeId
+               
 
             };
-            return animalDetail; 
+            return animalDetail;
         }
         [HttpPut("upload-bone")]
         public ActionResult ReceiveFile([FromForm] IFormFile file)

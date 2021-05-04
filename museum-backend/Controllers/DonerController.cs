@@ -31,5 +31,39 @@ namespace museum_backend.Controllers
         {
             return _donerService.Get(id);
         }
+
+        //post
+        [HttpPost()]
+        public ActionResult<Doner> ReceiveFile([FromForm] DonerInput data)
+        {
+            var newDoner = new Doner()
+            {
+                Name =data.Name,
+                LastName = data.LastName,
+                ImgPath = data.ImgPath,
+                PayDate = data.PayDate,
+                Donation = data.Donation
+            };
+
+            _donerService.Create(newDoner);
+            return Ok(200);
+
+        }
+
+
+        //delete
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
+        {
+            Doner doner;
+            {
+                doner = _donerService.Get(id);
+            }
+            _donerService.Remove(doner);
+
+            return NoContent();
+
+
+        }
     }
 }

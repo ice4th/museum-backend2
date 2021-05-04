@@ -25,5 +25,10 @@ namespace museum_backend.Services
 
         public Doner Get(string id) =>
             _doner.Find(doner => doner.Id == id).FirstOrDefault();
+
+        public void Create(Doner newDoner) => _doner.InsertOne(newDoner);
+
+        public void Remove(Doner donerIn) =>
+            _doner.DeleteOne(doner => doner.Id == donerIn.Id);
     }
 }

@@ -24,8 +24,5 @@ namespace museum_backend.Services
         public Animal Get(string id) =>
             _animal.Find(animal => animal.Id == id).FirstOrDefault();
 
-        public List<Animal> GetByTypeId(string typeId) =>
-            _animal.Find(animal => animal.TypeId == typeId).ToList();
-
     }
 }

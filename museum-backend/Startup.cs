@@ -41,7 +41,6 @@ namespace museum_backend
 			services.AddSingleton<MuseumInfoService>();
 			services.AddSingleton<NewsService>();
 			services.AddSingleton<OrganService>();
-			services.AddSingleton<OwnerService>();
 			services.AddSingleton<TaxonomyService>();
 
 			services.AddCors(options =>
