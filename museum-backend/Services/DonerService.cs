@@ -28,7 +28,15 @@ namespace museum_backend.Services
 
         public void Create(Doner newDoner) => _doner.InsertOne(newDoner);
 
+        public void Update(string id, Doner donerIn) =>
+            _doner.ReplaceOne(doner => doner.Id == id,donerIn);
+
         public void Remove(Doner donerIn) =>
             _doner.DeleteOne(doner => doner.Id == donerIn.Id);
+
+
+
     }
+
+
 }

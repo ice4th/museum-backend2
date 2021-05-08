@@ -28,6 +28,8 @@ namespace museum_backend.Services
 
         public void Update(string id, News newsIn) =>
             _news.ReplaceOne(news => news.Id == id,newsIn);
+
+
         public void Remove(News newsIn) =>
             _news.DeleteOne(news => news.Id == newsIn.Id);
     }

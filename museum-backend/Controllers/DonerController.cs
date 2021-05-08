@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using museum_backend.Models;
 using museum_backend.Services;
 
+
 namespace museum_backend.Controllers
 {
     [Route("api/[controller]")]
@@ -38,7 +39,7 @@ namespace museum_backend.Controllers
         {
             var newDoner = new Doner()
             {
-                Name =data.Name,
+                Name = data.Name,
                 LastName = data.LastName,
                 ImgPath = data.ImgPath,
                 PayDate = data.PayDate,
@@ -49,6 +50,49 @@ namespace museum_backend.Controllers
             return Ok(200);
 
         }
+
+
+        //update
+        [HttpPut()]
+
+        public IActionResult Update([FromForm] Doner donerIn)
+        {
+
+            var newDoner = new Doner()
+            {
+                Name = donerIn.Name,
+                LastName = donerIn.LastName,
+                ImgPath = donerIn.ImgPath,
+                PayDate = donerIn.PayDate,
+                Donation = donerIn.Donation,
+            };
+
+            _donerService.Update(donerIn.Id, donerIn);
+
+            return NoContent();
+        }
+
+
+
+        //[HttpGet("test/{id:length(24)}")]
+
+
+        //public IActionResult UpdateDoner(string id)
+        //{
+        //    return NoContent();
+        //}
+        //{
+        //    Doner doner;
+        //    {
+        //        doner = _donerService.Get(id);
+
+        //    }
+        //    donerIn.Id = doner.Id;
+
+        //    _donerService.Update(id, donerIn);
+
+        //    return NoContent();
+        //}
 
 
         //delete
@@ -63,7 +107,8 @@ namespace museum_backend.Controllers
 
             return NoContent();
 
-
         }
+
+
     }
 }

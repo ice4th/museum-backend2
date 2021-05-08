@@ -16,11 +16,16 @@ namespace museum_backend.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public ICollection<string> ImgPath { get; set; }
+
         [BsonRepresentation(BsonType.String)]
         public DateTimeOffset AuthorDate { get; set; }
+
         [BsonRepresentation(BsonType.String)]
         public DateTimeOffset EditDate { get; set; }
 
-        public bool checkbox { get; set; }
+        public static implicit operator News(News v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

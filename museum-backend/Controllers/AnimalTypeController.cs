@@ -31,6 +31,8 @@ namespace museum_backend.Controllers
         {
             return _animalTypeService.Get(id);
         }
+
+
     
     }
 }

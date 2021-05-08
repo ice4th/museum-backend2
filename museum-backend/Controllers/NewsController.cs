@@ -14,10 +14,13 @@ namespace museum_backend.Controllers
     public class NewsController : ControllerBase
     {
         private readonly NewsService _newsService;
+        private readonly ImageService _imageService;
 
-        public NewsController(NewsService newsService)
+        public NewsController(NewsService newsService, ImageService imageService)
         {
             _newsService = newsService;
+            _imageService = imageService;
+
         }
 
         [HttpGet("visitor")]
@@ -52,11 +55,12 @@ namespace museum_backend.Controllers
         [HttpPut()]
         public IActionResult Update([FromForm] News newsIn)
         {
+            //string Img = _imageService.SaveImg(newsIn.imgPath);
             var newNews = new News()
             {
                 Title = newsIn.Title,
                 Description = newsIn.Description,
-                ImgPath = newsIn.ImgPath,
+                ImgPath = newsIn.ImgPath
             };
 
             _newsService.Update(newsIn.Id, newsIn);

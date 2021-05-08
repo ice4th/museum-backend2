@@ -13,6 +13,7 @@ namespace museum_backend.Models
         public string Name { get; set; }
         public string LastName { get; set; }
         public string ImgPath { get; set; }
+
         [BsonRepresentation(BsonType.String)]
         public DateTime PayDate { get; set; }
         public double Donation { get; set; }
