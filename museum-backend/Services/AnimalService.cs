@@ -24,5 +24,13 @@ namespace museum_backend.Services
         public Animal Get(string id) =>
             _animal.Find(animal => animal.Id == id).FirstOrDefault();
 
+        public void Create(Animal newAnimal) => _animal.InsertOne(newAnimal);
+
+        public void Update(string id, Animal animaldata) =>
+            _animal.ReplaceOne(animal => animal.Id == id, animaldata);
+
+
+        public void Remove(Animal data) =>
+            _animal.DeleteOne(animal => animal.Id == data.Id);
     }
 }

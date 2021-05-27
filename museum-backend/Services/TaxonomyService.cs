@@ -24,5 +24,14 @@ namespace museum_backend.Services
 
         public Taxonomy Get(string id) =>
             _taxonomy.Find(taxonomy => taxonomy.Id == id).FirstOrDefault();
+
+        public void Create(Taxonomy newTaxonomy) => _taxonomy.InsertOne(newTaxonomy);
+
+        public void Update(string id, Taxonomy animaldata) =>
+            _taxonomy.ReplaceOne(taxonomy => taxonomy.Id == id, animaldata);
+
+
+        public void Remove(Taxonomy data) =>
+            _taxonomy.DeleteOne(taxonomy => taxonomy.Id == data.Id);
     }
 }

@@ -32,10 +32,53 @@ namespace museum_backend.Controllers
             return _organService.Get(id);
         }
 
-        [HttpPut("upload-organ")]
-        public ActionResult ReceiveFile([FromForm] IFormFile file)
+        //insert
+        [HttpPost()]
+        public ActionResult<Organ> ReceiveFile([FromForm] OrganInput data)
         {
+            var newOrgan = new Organ()
+            {
+                NameTh = data.NameTh,
+                NameEng = data.NameEng,
+                Description = data.Description,
+                ImgPath = data.ImgPath,
+            };
+            _organService.Create(newOrgan);
+
+            return Ok(200);
+        }
+
+
+        //update
+        [HttpPut("upload-organ")]
+        public IActionResult Update([FromForm] Organ data)
+        {
+            //string Img = _imageService.SaveImg(newsIn.imgPath);
+            var newOrgan = new Organ()
+            {
+                NameTh = data.NameTh,
+                NameEng = data.NameEng,
+                Description = data.Description,
+                ImgPath = data.ImgPath,
+            };
+
+            _organService.Update(data.Id, data);
+
             return Ok("success");
+        }
+
+        //delete
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
+        {
+            Organ organ;
+            {
+                organ = _organService.Get(id);
+            }
+            _organService.Remove(organ);
+
+            return NoContent();
+
         }
     }
 }

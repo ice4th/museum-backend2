@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using museum_backend.Models;
 using museum_backend.Services;
-using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace museum_backend.Controllers
 {
@@ -18,6 +19,7 @@ namespace museum_backend.Controllers
     {
         private readonly AnimalService _animalService;
         private readonly TaxonomyService _taxonomyService;
+        
 
         public AnimalController(AnimalService animalService, TaxonomyService taxonomyService)
         {
@@ -26,7 +28,6 @@ namespace museum_backend.Controllers
         }
 
         
-
 
         [HttpGet("visitor")]
         public ActionResult<List<Animal>> GetForVisitor()
@@ -46,68 +47,96 @@ namespace museum_backend.Controllers
             {
                 Id = animal.Id,
                 ThaiName = animal.ThaiName,
-                CommoneName = animal.CommoneName,
+                CommonName = animal.CommonName,
                 ScientificName = animal.ScientificName,
                 Description = animal.Description,
                 TaxonomyId = Taxonomy,
                 BoneImgPath = animal.BoneImgPath,
                 ImgPath = animal.ImgPath,
                
-
             };
             return animalDetail;
         }
 
 
-        [HttpPut("upload-bone")]
-        public async Task<ActionResult> ReceiveFile([FromForm] IFormFile file)
+         //insert
+        [HttpPost()]
+        public ActionResult<Animal> ReceiveFile([FromForm] AnimalInput data)
         {
-            Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(file.FileName);
-            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-            Excel.Range xlRange = xlWorksheet.UsedRange;
-
-            int rowCount = xlRange.Rows.Count;
-            int colCount = xlRange.Columns.Count;
-
-            //iterate over the rows and columns and print to the console as it appears in the file
-            //excel is not zero based!!
-            for (int i = 1; i <= rowCount; i++)
+            var newTaxonomy = new Taxonomy()
             {
-                for (int j = 1; j <= colCount; j++)
-                {
-                    //new line
-                    if (j == 1)
-                        Console.Write("\r\n");
+                Kingdom = data.Kingdom,
+                Phylum = data.Phylum,
+                SubPhylum = data.SubPhylum,
+                InfraPhylum = data.InfraPhylum,
+                Class = data.Class,
+                SubClass = data.SubClass,
+                InfraClass = data.InfraClass,
+                Order = data.Order,
+                SubOrder = data.SubOrder,
+                InfraOrder = data.InfraOrder,
+                Family = data.Family,
+                SubFamily = data.SubFamily,
+                InfraFamily = data.InfraFamily,
+                Genus = data.Genus,
+                SubGenus = data.SubGenus,
+                InfraGenus = data.InfraGenus,
+                Species = data.Species,
+                SubSpecies = data.SubSpecies,
+                InfraSpecies = data.InfraSpecies,
 
-                    //write the value to the console
-                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
-                        Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");
-                }
-            }
+            };
+            _taxonomyService.Create(newTaxonomy);         
 
-            //cleanup
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            var newAnimal = new Animal()
+            {
+                TaxonomyId = newTaxonomy.Id,
+                ThaiName = data.ThaiName,
+                CommonName = data.CommonName,
+                ScientificName = data.ScientificName,
+                Description = data.Description,
+                BoneImgPath = data.BoneImgPath,
+                ImgPath = data.ImgPath,
+            };
+            _animalService.Create(newAnimal);
 
-            //rule of thumb for releasing com objects:
-            //  never use two dots, all COM objects must be referenced and released individually
-            //  ex: [somthing].[something].[something] is bad
+            return Ok(200);
+        }
 
-            //release com objects to fully kill excel process from running in the background
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
+        //update
+        [HttpPut("upload-bone")]
+        public IActionResult Update([FromForm] Animal animaldata)
+        {
+            //string Img = _imageService.SaveImg(newsIn.imgPath);
+            var newAnimal = new Animal()
+            {
+                ThaiName = animaldata.ThaiName,
+                CommonName = animaldata.CommonName,
+                ScientificName = animaldata.ScientificName,
+                Description = animaldata.Description,
+                BoneImgPath = animaldata.BoneImgPath,
+                ImgPath = animaldata.ImgPath,
+            };
 
-            //close and release
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
+            _animalService.Update(animaldata.Id, animaldata);
 
-            //quit and release
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);
+
             return Ok("success");
         }
 
+        //delete
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
+        {
+            Animal animal;
+            {
+                animal = _animalService.Get(id);
+            }
+            _animalService.Remove(animal);
+
+            return NoContent();
+
+        }
 
 
 

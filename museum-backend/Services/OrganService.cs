@@ -20,10 +20,16 @@ namespace museum_backend.Services
                 _organ = database.GetCollection<Organ>(settings.OrganColName);
             }
 
-            public List<Organ> Get() =>
-                _organ.Find(_ => true).ToList();
+            public List<Organ> Get() => _organ.Find(_ => true).ToList();
 
-            public Organ Get(string id) =>
-                _organ.Find(organ => organ.Id == id).FirstOrDefault();
-        }
+            public Organ Get(string id) => _organ.Find(organ => organ.Id == id).FirstOrDefault();
+
+            public void Create(Organ newOrgan) => _organ.InsertOne(newOrgan);
+
+            public void Update(string id, Organ data) =>
+            _organ.ReplaceOne(organ => organ.Id == id, data);
+
+            public void Remove(Organ data) =>
+            _organ.DeleteOne(organ => organ.Id == data.Id);
+    }
 }

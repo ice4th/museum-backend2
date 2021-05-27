@@ -20,12 +20,8 @@ namespace museum_backend.Models
         [BsonRepresentation(BsonType.String)]
         public DateTimeOffset AuthorDate { get; set; }
 
-        [BsonRepresentation(BsonType.String)]
-        public DateTimeOffset EditDate { get; set; }
 
-        public static implicit operator News(News v)
-        {
-            throw new NotImplementedException();
-        }
+
+       
     }
 }

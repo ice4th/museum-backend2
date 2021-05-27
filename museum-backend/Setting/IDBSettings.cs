@@ -15,7 +15,6 @@ namespace museum_backend.Setting
         public string MuseumInfoColName { get; set; }
         public string NewsColName { get; set; }
         public string OrganColName { get; set; }
-        public string OwnerColName { get; set; }
         public string TaxonomyColName { get; set; }
     }
     public interface IDBSettings
@@ -28,7 +27,6 @@ namespace museum_backend.Setting
         public string MuseumInfoColName { get; set; }
         public string NewsColName { get; set; }
         public string OrganColName { get; set; }
-        public string OwnerColName { get; set; }
         public string TaxonomyColName { get; set; }
     }
 }

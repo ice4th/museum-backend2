@@ -13,7 +13,7 @@ namespace museum_backend.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string ThaiName { get; set; }
-        public string CommoneName { get; set; }
+        public string CommonName { get; set; }
         public string ScientificName { get; set; }
         public string Description { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]

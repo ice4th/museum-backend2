@@ -14,14 +14,13 @@ namespace museum_backend.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string ThaiName { get; set; }
-        public string CommoneName { get; set; }
+        public string CommonName { get; set; }
         public string ScientificName { get; set; }
         public string Description { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string TaxonomyId { get; set; }
         public ICollection<string> BoneImgPath { get; set; }
         public ICollection<string> ImgPath { get; set; }
-
-
+        //public string Taxonomy { get; internal set; }
     }
 }

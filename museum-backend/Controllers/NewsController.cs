@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using museum_backend.Models;
@@ -9,18 +10,16 @@ using museum_backend.Services;
 
 namespace museum_backend.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class NewsController : ControllerBase
     {
         private readonly NewsService _newsService;
-        private readonly ImageService _imageService;
 
-        public NewsController(NewsService newsService, ImageService imageService)
+        public NewsController(NewsService newsService)
         {
             _newsService = newsService;
-            _imageService = imageService;
-
         }
 
         [HttpGet("visitor")]
@@ -45,6 +44,7 @@ namespace museum_backend.Controllers
                 Title = data.Title,
                 Description = data.Description,
                 ImgPath = data.ImgPath,
+                AuthorDate = data.AuthorDate,
             };
             _newsService.Create(newNews);
         
@@ -53,19 +53,19 @@ namespace museum_backend.Controllers
 
         //update
         [HttpPut()]
-        public IActionResult Update([FromForm] News newsIn)
+        public IActionResult Update([FromForm] News data)
         {
             //string Img = _imageService.SaveImg(newsIn.imgPath);
             var newNews = new News()
             {
-                Title = newsIn.Title,
-                Description = newsIn.Description,
-                ImgPath = newsIn.ImgPath
+                Title = data.Title,
+                Description = data.Description,
+                ImgPath = data.ImgPath
             };
 
-            _newsService.Update(newsIn.Id, newsIn);
+            _newsService.Update(data.Id, data);
 
-            return NoContent();
+            return Ok(200);
         }
 
         //delete

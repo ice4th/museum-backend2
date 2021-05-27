@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using museum_backend.Models;
@@ -10,6 +11,7 @@ using museum_backend.Services;
 
 namespace museum_backend.Controllers
 {
+   
     [Route("api/[controller]")]
     [ApiController]
     public class DonerController : ControllerBase
@@ -51,7 +53,6 @@ namespace museum_backend.Controllers
 
         }
 
-
         //update
         [HttpPut()]
 
@@ -71,28 +72,6 @@ namespace museum_backend.Controllers
 
             return NoContent();
         }
-
-
-
-        //[HttpGet("test/{id:length(24)}")]
-
-
-        //public IActionResult UpdateDoner(string id)
-        //{
-        //    return NoContent();
-        //}
-        //{
-        //    Doner doner;
-        //    {
-        //        doner = _donerService.Get(id);
-
-        //    }
-        //    donerIn.Id = doner.Id;
-
-        //    _donerService.Update(id, donerIn);
-
-        //    return NoContent();
-        //}
 
 
         //delete

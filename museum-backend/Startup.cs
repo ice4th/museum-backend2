@@ -35,13 +35,18 @@ namespace museum_backend
 			services.AddSingleton<IDBSettings>(sp =>
 				sp.GetRequiredService<IOptions<DBSettings>>().Value);
 
+			services.Configure<ImageSettings>(
+				Configuration.GetSection(nameof(ImageSettings)));
+
+			services.AddSingleton<IImageSettings>(sp =>
+				sp.GetRequiredService<IOptions<ImageSettings>>().Value);
+
 			services.AddSingleton<AnimalService>();
-			services.AddSingleton<AnimalTypeService>();
 			services.AddSingleton<DonerService>();
-			services.AddSingleton<MuseumInfoService>();
 			services.AddSingleton<NewsService>();
 			services.AddSingleton<OrganService>();
 			services.AddSingleton<TaxonomyService>();
+			services.AddSingleton<ImageService>();
 
 			services.AddCors(options =>
 			{

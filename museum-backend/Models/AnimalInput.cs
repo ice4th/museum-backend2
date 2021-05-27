@@ -7,11 +7,16 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace museum_backend.Models
 {
-    public class Taxonomy
+    public class AnimalInput
     {
-        [BsonId]
+        public string ThaiName { get; set; }
+        public string CommonName { get; set; }
+        public string ScientificName { get; set; }
+        public string Description { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public Taxonomy TaxonomyId { get; set; }
+        public ICollection<string> BoneImgPath { get; set; }
+        public ICollection<string> ImgPath { get; set; }
         public string Kingdom { get; set; }
         public string Phylum { get; set; }
         public string SubPhylum { get; set; }
