@@ -61,8 +61,15 @@ namespace museum_backend.Controllers
 
          //insert
         [HttpPost()]
-        public ActionResult<Animal> ReceiveFile([FromForm] AnimalInput data)
+        public ActionResult<string> ReceiveFile([FromForm] AnimalInput data)
         {
+
+            //var animal = _animalService.Get();
+            var status = "";
+            var result = _animalService.Overlap(data.ThaiName);
+            if (result == null)
+                { 
+
             var newTaxonomy = new Taxonomy()
             {
                 Kingdom = data.Kingdom,
@@ -98,16 +105,23 @@ namespace museum_backend.Controllers
                 BoneImgPath = data.BoneImgPath,
                 ImgPath = data.ImgPath,
             };
-            _animalService.Create(newAnimal);
 
-            return Ok(200);
+                status = "Upload Success";
+
+            _animalService.Create(newAnimal);
+            }
+            else
+            {
+                status = "name already exists!";
+
+            }
+            return status;
         }
 
         //update
         [HttpPut("upload-bone")]
         public IActionResult Update([FromForm] Animal animaldata)
         {
-            //string Img = _imageService.SaveImg(newsIn.imgPath);
             var newAnimal = new Animal()
             {
                 ThaiName = animaldata.ThaiName,
@@ -119,7 +133,6 @@ namespace museum_backend.Controllers
             };
 
             _animalService.Update(animaldata.Id, animaldata);
-
 
             return Ok("success");
         }

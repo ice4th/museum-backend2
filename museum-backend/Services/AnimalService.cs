@@ -23,6 +23,9 @@ namespace museum_backend.Services
 
         public Animal Get(string id) =>
             _animal.Find(animal => animal.Id == id).FirstOrDefault();
+     
+        public Animal Overlap(string thaiName) =>
+            _animal.Find(animal => animal.ThaiName == thaiName).FirstOrDefault();
 
         public void Create(Animal newAnimal) => _animal.InsertOne(newAnimal);
 

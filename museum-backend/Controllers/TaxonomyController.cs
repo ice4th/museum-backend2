@@ -31,7 +31,6 @@ namespace museum_backend.Controllers
         {
             return _taxonomyService.Get(id);
 
-
         }
     }
 }

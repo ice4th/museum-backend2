@@ -34,18 +34,29 @@ namespace museum_backend.Controllers
 
         //insert
         [HttpPost()]
-        public ActionResult<Organ> ReceiveFile([FromForm] OrganInput data)
+        public ActionResult<String> ReceiveFile([FromForm] OrganInput data)
         {
-            var newOrgan = new Organ()
+            var status = "";
+            var result = _organService.Overlap(data.NameTh);
+            if (result == null)
             {
-                NameTh = data.NameTh,
-                NameEng = data.NameEng,
-                Description = data.Description,
-                ImgPath = data.ImgPath,
-            };
-            _organService.Create(newOrgan);
+                status = "Upload Success";
+                var newOrgan = new Organ()
+                {
+                    NameTh = data.NameTh,
+                    NameEng = data.NameEng,
+                    Description = data.Description,
+                    ImgPath = data.ImgPath,
+                };
+                _organService.Create(newOrgan);
+            }
+            else
+            {
+                status = "name already exists!";
 
-            return Ok(200);
+            }
+
+            return status;
         }
 
 
@@ -53,7 +64,6 @@ namespace museum_backend.Controllers
         [HttpPut("upload-organ")]
         public IActionResult Update([FromForm] Organ data)
         {
-            //string Img = _imageService.SaveImg(newsIn.imgPath);
             var newOrgan = new Organ()
             {
                 NameTh = data.NameTh,

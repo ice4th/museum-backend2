@@ -23,6 +23,9 @@ namespace museum_backend.Services
             public List<Organ> Get() => _organ.Find(_ => true).ToList();
 
             public Organ Get(string id) => _organ.Find(organ => organ.Id == id).FirstOrDefault();
+            public Organ Overlap(string nameTh) =>
+            _organ.Find(organ => organ.NameTh == nameTh).FirstOrDefault();
+
 
             public void Create(Organ newOrgan) => _organ.InsertOne(newOrgan);
 
